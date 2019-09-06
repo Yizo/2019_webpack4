@@ -63,10 +63,11 @@ module.exports = {
             loader: 'url-loader',
             options: {
               limit:4096,
+              name: '[name].[contenthash:5].[ext]',
               // 把图片拷贝到images目录下
               outputPath: 'images',
               // 重写外面`publicPath`定义图片访问路径
-              publicPath: 'images'
+              publicPath: '../images'
             }
           }
         ]
