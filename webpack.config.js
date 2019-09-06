@@ -2,9 +2,12 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const TerserPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = {
   mode: 'development',
+  //mode: 'production',
   /** 
    * entry如果是一个文件就是单入口，chunk的名字是main
    * 如果多个文件就是多入口，chunk的名字就是入口的名字
@@ -17,7 +20,8 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'), // 输出的目录, 只能是绝对目录
     filename: '[name].[hash:5].js',
-    publicPath: '/' //公共资源根目录
+    // 跟路径 在浏览器访问的时候以什么路径访问
+    publicPath: '/'
   },
   devServer: {
     // 默认为根目录, 产出文件的根目录
@@ -26,6 +30,21 @@ module.exports = {
     host: 'localhost',
     // 开发服务器启动gzip压缩
     compress: true 
+  },
+  // 做优化的参数
+  optimization: {
+    // 做优化的插件
+    minimizer: [
+      // 压缩js
+      new TerserPlugin({
+        // 开启多进程并行压缩
+        parallel: true,
+        // 压缩时开启缓存,如果文件没有变化,使用上次的结果
+        cache: true,
+      }),
+      // 压缩css
+      new OptimizeCSSAssetsPlugin()
+    ]
   },
   module: {
     rules: [
@@ -66,9 +85,9 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      // 文件名
+      // 文件名,name为入口名
       filename: '[name].css',  
-      // 代码块名
+      // 代码块文件名(异步加载时用)
       chunkFilename: '[id].css'
     })
   ]

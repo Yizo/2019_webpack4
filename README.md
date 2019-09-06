@@ -9,6 +9,8 @@
 ## 清理目录插件`clean-webpack-plugin`
 ## 产出html文件插件`html-webpack-plugin`
 ## 在js和css中引入图片
+## 压缩js和css
+  
 
 ***
 
