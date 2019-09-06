@@ -28,3 +28,13 @@
       chunksSortMode: 'manual' 
     })
 ```
+
+### 2. 三种hash
+1. 一个entry产生一个chunk
+2. 一个chunk包含多个模块
+
+|  hash   | 含义  |
+|  :----  | :----  |
+| hash  | 每次编译产生的hash |
+| chunkhash  | 每个entry都会产出一个chunk,chunk文件不改变,chunkhash不会变化 | 
+| contenthash | 只有该模块内容变了,模块contenthash会改变 |

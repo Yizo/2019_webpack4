@@ -62,7 +62,11 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              limit:4096
+              limit:4096,
+              // 把图片拷贝到images目录下
+              outputPath: 'images',
+              // 重写外面`publicPath`定义图片访问路径
+              publicPath: 'images'
             }
           }
         ]
@@ -85,8 +89,8 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      // 文件名,name为入口名
-      filename: '[name].css',  
+      // 生成文件名,name为入口名
+      filename: 'css/[name].[contenthash:5].css',  
       // 代码块文件名(异步加载时用)
       chunkFilename: '[id].css'
     })
