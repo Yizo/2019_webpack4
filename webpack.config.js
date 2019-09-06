@@ -70,6 +70,11 @@ module.exports = {
             }
           }
         ]
+      },
+      // 在html中使用图片
+      {
+        test: /.(html|htm)$/,
+        loader: 'html-withimg-loader'
       }
     ]
   },
