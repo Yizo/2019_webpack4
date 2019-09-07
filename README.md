@@ -71,6 +71,37 @@ postcss的功能:
 1. 把css解析成javascript可以操作的抽象语法树(ast)
 2. 调用插件来处理ast得到结果
 
+## 转义es6/es7/jsx
+npm i babel-loader @babel/core @babel/preset-env  @babel/preset-react  -D 
+npm i @babel/plugin-proposal-decorators @babel/plugin-proposal-class-properties -D 
+
+## babel runtime
+* babel 在每个文件都插入了辅助代码，使代码体积过大
+* babel 对一些公共方法使用了非常小的辅助代码，比如 _extend
+* 默认情况下会被添加到每一个需要它的文件中。你可以引入 @babel/runtime 作为一个独立模块，来避免重复引入
+* @babel/preset-env只编译es6,es7语法,但对于一些api,如Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise
+  需要babel-plugin-transform-runtime编译
+```js
+  npm install --save-dev @babel/plugin-transform-runtime
+  npm install --save @babel/runtime
+  // .babelrc
+  {
+    "presets": ["@babel/preset-env"],
+    "plugins": [
+      ["@babel/plugin-proposal-decorators", { "legacy": true }],
+      ["@babel/plugin-proposal-class-properties", { "loose" : true }]
+      [
+          "@babel/plugin-transform-runtime",
+          {
+              "corejs": false,
+              "helpers": true,
+              "regenerator": true,
+              "useESModules": true
+          }
+      ]
+    ]
+  }  
+```
 
 ***
 

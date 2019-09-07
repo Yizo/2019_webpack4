@@ -54,6 +54,27 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(js)$/,
+        use: {
+          // 使用babel-loader来使用babel
+          loader: 'babel-loader',
+          options: {
+            /** 
+             * 预设规则
+             * preset-env: 以es6/es7的规则编译
+             * preset-react: 以jsx的规则编译
+             * */
+            "presets": [
+              "@babel/preset-env",
+              "@babel/preset-react"
+            ],
+            "plugins": [
+              //@babel/plugin-proposal-decorators @babel/plugin-proposal-class-properties
+            ]
+          }
+        }
+      },
+      {
         // 如果require或import的文件是css文件
         test: /\.css$/,
         //从右往左执行，有两种写法:1.数组 2.字符串
@@ -106,6 +127,13 @@ module.exports = {
       // 对引入代码块进行排序的模式
       chunksSortMode: 'manual' 
     }),
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      filename: 'index.html',
+      hash: true,
+      chunks: ['common', 'index'],
+      chunksSortMode: 'manual' 
+    }),    
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       // 生成文件名,name为入口名
