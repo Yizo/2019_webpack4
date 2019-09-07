@@ -6,11 +6,71 @@
   1. 三种loader写法
   2. css提取为style
   3. css提取成文件插件`mini-css-extract-plugin`
-## 清理目录插件`clean-webpack-plugin`
-## 产出html文件插件`html-webpack-plugin`
+## 清理目录插件
+  clean-webpack-plugin
+## 产出html文件插件
+  html-webpack-plugin
 ## 在js和css中引入图片
+  ```js
+      {
+        test: /\.(jpg|png|bmp|gif|svg)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit:4096,
+              name: '[name].[contenthash:5].[ext]',
+              // 把图片拷贝到images目录下
+              outputPath: 'images',
+              // 重写外面`publicPath`定义图片访问路径
+              publicPath: '../images'
+            }
+          }
+        ]
+      },  
+  ```
 ## 压缩js和css
-  
+  ```js
+  // 做优化的参数
+  optimization: {
+    // 做优化的插件
+    minimizer: [
+      // 压缩js
+      new TerserPlugin({
+        // 开启多进程并行压缩
+        parallel: true,
+        // 压缩时开启缓存,如果文件没有变化,使用上次的结果
+        cache: true,
+      }),
+      // 压缩css
+      new OptimizeCSSAssetsPlugin({
+        // 指定压缩文件的正则表达式
+        assetNameRegExp: /\.css$/g,
+        // cssnano是PostCSS优化和分解插件
+        cssProcessor: require('cssnano')
+      })
+    ]
+  },  
+  ```
+## 处理less和sass
+npm i less less-loader node-sass sass-loader -D
+```js
+      {
+        test: /\.less$/,
+        use: [ MiniCssExtractPlugin.loader, 'css-loader', 'less-loader' ]
+      },     
+      {
+        test: /\.scss$/,
+        use: [ MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ]
+      },
+```
+## 处理css前缀 
+npm i postcss-loader autoprefixer -D 
+
+postcss的功能: 
+1. 把css解析成javascript可以操作的抽象语法树(ast)
+2. 调用插件来处理ast得到结果
+
 
 ***
 

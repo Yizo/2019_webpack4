@@ -59,7 +59,7 @@ module.exports = {
         //从右往左执行，有两种写法:1.数组 2.字符串
         //use: ['style-loader','css-loader']
         // 提取css成文件
-        use: [ MiniCssExtractPlugin.loader, 'css-loader' ]
+        use: [ MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader' ]
       },
       {
         test: /\.less$/,

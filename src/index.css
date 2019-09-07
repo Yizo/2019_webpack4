@@ -4,3 +4,9 @@
   background-image: url('./images/1024.png');
   background-size: cover;
 }
+::placeholder{
+  color: red;
+}
+.container{
+  display: flex;
+}
