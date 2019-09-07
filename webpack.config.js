@@ -43,7 +43,12 @@ module.exports = {
         cache: true,
       }),
       // 压缩css
-      new OptimizeCSSAssetsPlugin()
+      new OptimizeCSSAssetsPlugin({
+        // 指定压缩文件的正则表达式
+        assetNameRegExp: /\.css$/g,
+        // cssnano是PostCSS优化和分解插件
+        cssProcessor: require('cssnano')
+      })
     ]
   },
   module: {
@@ -56,6 +61,14 @@ module.exports = {
         // 提取css成文件
         use: [ MiniCssExtractPlugin.loader, 'css-loader' ]
       },
+      {
+        test: /\.less$/,
+        use: [ MiniCssExtractPlugin.loader, 'css-loader', 'less-loader' ]
+      },     
+      {
+        test: /\.scss$/,
+        use: [ MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ]
+      },             
       {
         test: /\.(jpg|png|bmp|gif|svg)$/,
         use: [
