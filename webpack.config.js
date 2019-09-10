@@ -5,9 +5,11 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 
 module.exports = {
   mode: 'development',
+  devtool: 'cheap-module-eval-source-map',
   //mode: 'production',
   /** 
    * entry如果是一个文件就是单入口，chunk的名字是main
@@ -51,9 +53,6 @@ module.exports = {
         cssProcessor: require('cssnano')
       })
     ]
-  },
-  externals: {
-    jquery: 'jquery'
   },
   module: {
     rules: [
@@ -127,17 +126,10 @@ module.exports = {
       // 避免缓存,在文件后面添加hash
       hash: true,
       // 设置按需引入的chukn
-      chunks: ['common', 'index'],
+      chunks: ['common', 'index', 'index1'],
       // 对引入代码块进行排序的模式
       chunksSortMode: 'manual' 
-    }),
-    new HtmlWebpackPlugin({
-      template: './src/index.html',
-      filename: 'index.html',
-      hash: true,
-      chunks: ['common', 'index', 'index1'],
-      chunksSortMode: 'manual' 
-    }),    
+    }),   
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       // 生成文件名,name为入口名
@@ -158,6 +150,15 @@ module.exports = {
     */
     new webpack.ProvidePlugin({
       _: 'lodash'
+    }),
+    new HtmlWebpackExternalsPlugin({
+      externals: [
+        {
+          module: 'jquery',
+          entry: 'https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js',
+          global: 'jQuery'
+        }
+      ]
     })
   ]
 }

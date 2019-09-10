@@ -148,6 +148,19 @@ import jQuery from 'jquery';
   }
 ```
 
+###  html-webpack-externals-plugin
+自动外链第三方资源
+```js
+new HtmlWebpackExternalsPlugin({
+  externals: [
+    {
+      module: 'jquery',
+      entry: 'https://cdn.bootcss.com/jquery/3.4.1/core.js',
+      global: 'JQuery'
+    }
+  ]
+})
+```
 ***
 
 
