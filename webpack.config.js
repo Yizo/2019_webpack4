@@ -52,6 +52,9 @@ module.exports = {
       })
     ]
   },
+  externals: {
+    jquery: 'jquery'
+  },
   module: {
     rules: [
       {
