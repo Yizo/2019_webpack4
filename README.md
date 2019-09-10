@@ -103,6 +103,35 @@ npm i @babel/plugin-proposal-decorators @babel/plugin-proposal-class-properties 
   }  
 ```
 
+## 打包第三方类库
+### 直接import引入
+```js
+import _ from 'lodash'
+```
+### 插件引入
+```js
+  // 自动向所有模块注入一个_变量,引用了lodash模块
+  // 这种注入模式相当于向模块内部注入一个局部变量 
+  new webpack.ProvidePlugin({
+    _: 'lodash'
+  })
+```
+
+### expose-loader
+相当与配置一个全局变量
+1.  require 
+
+`let $ = require('expose-loader?$!jquery')`
+
+2. module
+
+```js
+{
+     test: /\.(jquery)$/,
+     loader: 'expose-loader?$'
+}
+```
+
 ***
 
 

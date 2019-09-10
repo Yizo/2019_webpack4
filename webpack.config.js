@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -15,7 +16,7 @@ module.exports = {
   entry: {
     common: './src/common.js',
     index: './src/index.js',
-    login: './src/login.js'
+    index1: './src/index1.js'
   },
   output: {
     path: path.join(__dirname, 'dist'), // 输出的目录, 只能是绝对目录
@@ -131,7 +132,7 @@ module.exports = {
       template: './src/index.html',
       filename: 'index.html',
       hash: true,
-      chunks: ['common', 'index'],
+      chunks: ['common', 'index', 'index1'],
       chunksSortMode: 'manual' 
     }),    
     new CleanWebpackPlugin(),
@@ -140,6 +141,20 @@ module.exports = {
       filename: 'css/[name].[contenthash:5].css',  
       // 代码块文件名(异步加载时用)
       chunkFilename: '[id].css'
+    }),
+    // 自动向所有模块注入一个_变量,引用了lodash模块
+    // 这种注入模式相当于向模块内部注入一个局部变量
+    /**
+     * 如果配置全局变量
+     * 1. let $ = require('expose-loader?$!jquery')
+     * 2. 
+     * {
+     *  test: /\.(jquery)$/,
+     *  loader: 'expose-loader?$'
+     * }
+    */
+    new webpack.ProvidePlugin({
+      _: 'lodash'
     })
   ]
 }
