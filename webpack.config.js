@@ -10,6 +10,15 @@ const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 module.exports = {
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
+  watch:true,
+  watchOptions:{
+    //默认为空，不监听的文件或者文件夹，支持正则匹配
+    ignored:/node_modules/,
+    //监听到变化发生后会等300ms再去执行，默认300ms
+    aggregateTimeout:300,
+    //判断文件是否发生变化是通过不停的询问文件系统指定议是有变化实现的，默认每秒问1000次
+    poll:1000
+  },
   //mode: 'production',
   /** 
    * entry如果是一个文件就是单入口，chunk的名字是main
