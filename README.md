@@ -161,6 +161,38 @@ new HtmlWebpackExternalsPlugin({
   ]
 })
 ```
+
+## resolve解析
+### extensions
+
+```js
+resolve: {
+  // 在require或是import的时候加文件扩展名,会依次尝试添加扩展名进行匹配
+  extensions: [".js",".jsx",".json",".css"],
+  alias: {
+    // 配置别名
+    // 每当引入xxx时,相当于引入./src/../xxx, 而不会从node_modules里查找
+    'xxx': './src/xxx'
+  },
+  // 对于直接声明依赖名的模块（如 react ），webpack 会类似 Node.js 一样进行路径搜索，搜索node_modules目录
+  // 甚至还可以添加额外的目录
+  modules: ['node_modules', 'zfmodules'],
+  // 默认情况下package.json 文件则按照文件中 main 字段的文件名来查找文件
+  // 当目录下没有 package.json 文件时，我们说会默认使用目录下的 index.js 这个文件 
+  mainFields: ['module', 'index'],
+  // 配置解析 loader 时的 resolve 配置
+  resolveLoader: {
+    modules: [ 'node_modules' ],
+    extensions: [ '.js', '.json' ],
+    mainFields: [ 'loader', 'main' ]
+  }
+},
+// 不需要解析的依赖
+noParse: /jquery|lodash/
+```
+
+
+
 ***
 
 
