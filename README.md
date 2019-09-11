@@ -194,7 +194,90 @@ noParse: /jquery|lodash/
 2. "dev": "webpack-dev-server --env=development --open"
 3. webpack-merge拆分配置
 
+## 对图片进行压缩和优化
+`image-webpack-loader`
+```js
+ {
+          test: /\.(png|svg|jpg|gif|jpeg|ico)$/,
+          use: [
+            'file-loader',
++           {
++             loader: 'image-webpack-loader',
++             options: {
++               mozjpeg: {
++                 progressive: true,
++                 quality: 65
++               },
++               optipng: {
++                 enabled: false,
++               },
++               pngquant: {
++                 quality: '65-90',
++                 speed: 4
++               },
++               gifsicle: {
++                 interlaced: false,
++               },
++               webp: {
++                 quality: 75
++               }
++             }
++           },
+          ]
+        }
+```
 
+## 日志优化
+```js
+stats: 'verbose',
+plugins: [
+  new FriendlyErrorsWebpackPlugin()
+]
+```
+
+## 费时分析
+```js
+const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin');
+const smw = new SpeedMeasureWebpackPlugin();
+module.exports =smw.wrap({
+  // webpack配置
+  ...
+});
+```
+
+## 打包后分析
+```js
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+module.exports={
+  plugins: [
+    new BundleAnalyzerPlugin()  // 使用默认配置
+    //默认配置的具体配置项
+    // new BundleAnalyzerPlugin({
+    // 启动展示打包报告的http服务器,不展示为disabled
+    //   analyzerMode: 'server', 
+    //   analyzerHost: '127.0.0.1',
+    //   analyzerPort: '8888',
+    //   reportFilename: 'report.html',
+    //   defaultSizes: 'parsed',
+    //   openAnalyzer: true,
+    // 是否生成stats.json文件
+    //   generateStatsFile: false,
+    //   statsFilename: 'stats.json',
+    //   statsOptions: null,
+    //   excludeAssets: null,
+    //   logLevel: info
+    // })
+  ]
+}
+
+// 命令
+{
+ "scripts": {
+    "generateAnalyzFile": "webpack --profile --json > stats.json", // 生成分析文件
+    "analyz": "webpack-bundle-analyzer --port 8888 ./dist/stats.json" // 启动展示打包报告的http服务器
+  }
+}
+```
 ***
 
 
