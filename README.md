@@ -191,7 +191,10 @@ resolve: {
 noParse: /jquery|lodash/
 ```
 
-
+### 区分环境变量
+1. process.env.NODE_ENV
+2. "dev": "webpack-dev-server --env=development --open"
+3. webpack-merge拆分配置
 
 ***
 
