@@ -163,8 +163,6 @@ new HtmlWebpackExternalsPlugin({
 ```
 
 ## resolve解析
-### extensions
-
 ```js
 resolve: {
   // 在require或是import的时候加文件扩展名,会依次尝试添加扩展名进行匹配
@@ -191,10 +189,11 @@ resolve: {
 noParse: /jquery|lodash/
 ```
 
-### 区分环境变量
+## 区分环境变量
 1. process.env.NODE_ENV
 2. "dev": "webpack-dev-server --env=development --open"
 3. webpack-merge拆分配置
+
 
 ***
 
