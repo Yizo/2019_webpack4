@@ -1,11 +1,5 @@
-
 import './index.css'
-import './less.less'
-import './sass.scss'
-import logo from './images/1024.png'
-say()
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-const Img = new Image()
-Img.src = logo
-
-document.body.appendChild(Img)
+ReactDOM.render(<div>123</div>, document.getElementById('root'))

@@ -1,12 +1,6 @@
-#logo{
-  width: 100px;
-  height: 100px;
-  background-image: url('./images/1024.png');
-  background-size: cover;
-}
-::placeholder{
-  color: red;
-}
-.container{
-  display: flex;
+#root{
+    width: 375px;
+    height: 375px;
+    border: 1px solid red;
+    box-sizing: border-box;
 }
